@@ -1,0 +1,17 @@
+//input json
+{
+	
+	"name":"souvik sarkar",
+	"result":90
+	
+}
+
+//output json
+{
+    "id": 1,
+    "name": "souvik sarkar",
+    "result": 90
+}
+
+
+
