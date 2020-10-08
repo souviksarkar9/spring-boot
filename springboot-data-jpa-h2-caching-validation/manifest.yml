@@ -1,0 +1,12 @@
+applications:
+- name: springboot-data-jpa-h2
+  disk_quota: 1G
+  instances: 1
+  memory: 1G
+  path: target/springboot-data-jpa-0.0.1-SNAPSHOT.jar
+  timeout: 120
+  routes:
+  - route: springboot-data-jpa-h2-ssouvik-101.cfapps.io
+  buildpacks:
+  - https://github.com/cloudfoundry/java-buildpack.git
+   
