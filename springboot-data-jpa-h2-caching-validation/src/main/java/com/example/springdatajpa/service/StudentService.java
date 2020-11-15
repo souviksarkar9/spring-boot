@@ -28,10 +28,9 @@ public class StudentService {
 		return srepo.save(s);
 	}
 
-	public Student deleteStudentResult(Student s){
+	public void deleteStudentResult(Long id){
 		logger.info("Inside Delete");
-		 srepo.delete(s);
-		return s;
+		 srepo.deleteById(id);
 	}
 
 }

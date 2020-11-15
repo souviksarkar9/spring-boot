@@ -11,11 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springdatajpa.model.Result;
 import com.example.springdatajpa.model.Student;
 import com.example.springdatajpa.service.StudentService;
 import javax.validation.*;
@@ -34,22 +36,27 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value="/all" ,  method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
-	@Transactional(readOnly = true)
-	@Cacheable("student-cache")
+	//@Transactional(readOnly = true)
+	//@Cacheable("student-cache")
 	public List<Student> getAllStudentResults(){
 		logger.info("Student Service Autowiring: {} " , studentService);
 		return studentService.getAllStudentResults();
 	}
 	
 	@RequestMapping(value="/save" ,  method = RequestMethod.POST , produces = MediaType.APPLICATION_JSON_VALUE)
+	//@CacheEvict("student-cache")
 	public Student saveStudent(@Valid @RequestBody Student student){
+		
+		Result result = student.getResult();
+		result.setTotal(result.getEnglish()+result.getMaths()+result.getScience());
+			
 		return studentService.saveStudentResult(student);
 	}
 	
-	@RequestMapping(value="/delete" ,  method = RequestMethod.DELETE , produces = MediaType.APPLICATION_JSON_VALUE)
-	@CacheEvict("student-cache")
-	public Student deleteStudent(@RequestBody Student student){
-		return studentService.deleteStudentResult(student);
+	@RequestMapping(value="/delete/{id}" ,  method = RequestMethod.DELETE , produces = MediaType.APPLICATION_JSON_VALUE)
+	//@CacheEvict("student-cache")
+	public void deleteStudent(@PathVariable Long id){
+		studentService.deleteStudentResult(id);
 	}
 	
 
